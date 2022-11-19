@@ -21,9 +21,19 @@ firmalisten:
   port": 5843
 ```
 
-Start your proxy with:
+Start your proxy quietly with:
 ```
-skilt start
+skilt
+```
+
+Start quietly in background with:
+```
+nohup skilt >/dev/null 2>&1
+```
+
+TIP: This can be added as an alias to your `.zshrc`:
+```
+alias skiltq=nohup skilt >/dev/null 2>&1
 ```
 
 Stop your proxy with:

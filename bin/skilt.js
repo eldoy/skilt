@@ -18,6 +18,6 @@ if (command == 'start') {
 } else if (command == 'stop') {
   extras.run(`kill -9 $(pgrep -f bin/skilt)`)
 } else {
-  console.log('Unknown command:', command)
+  console.log(`\nUnknown command: ${command}\n`)
   usage()
 }
