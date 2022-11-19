@@ -44,9 +44,9 @@ pay_eldoy_test:
 
 ### Commands
 
-Start your proxy quietly with:
+Start your proxy server with:
 ```
-skilt
+skilt start
 ```
 
 Start quietly in background with:
