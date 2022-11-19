@@ -1,0 +1,23 @@
+{
+  "name": "skilt",
+  "version": "0.1.0",
+  "description": "Web proxy server",
+  "main": "index.js",
+  "bin": {
+    "skilt": "bin/skilt.js"
+  },
+  "scripts": {
+    "test": "echo 'no test library installed'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eldoy/skilt"
+  },
+  "author": "Vidar Eldøy <vidar@eldoy.com>",
+  "license": "MIT",
+  "dependencies": {
+    "extras": "^0.10.6",
+    "http-proxy": "^1.18.1",
+    "rekvest": "^0.1.4"
+  }
+}
