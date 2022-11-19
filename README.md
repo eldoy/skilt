@@ -56,7 +56,7 @@ nohup skilt start >/dev/null 2>&1
 
 TIP: This can be added as an alias to your `.zshrc`:
 ```
-alias skiltq=nohup skilt >/dev/null 2>&1
+alias skiltq="nohup skilt start >/dev/null 2>&1"
 ```
 
 and then you run in background with `skiltq &`
