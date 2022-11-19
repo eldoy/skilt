@@ -4,7 +4,7 @@ Web proxy server.
 
 Lets you use your own domain names for apps in development running on localhost.
 
-### Usage
+### Install
 
 This example will set up `http://firmalisten.test` to point to an app running on `locahost` port `5834`.
 
@@ -13,13 +13,36 @@ First install the command line tool:
 npm i -g skilt
 ```
 
+### Config
+
 Add config file in `~/.config/skilt/config.yml`:
 
 ```yml
 firmalisten:
-  hostname: firmalisten.test
-  port": 5843
+  host: firmalisten.test
+  port: 5843
 ```
+
+Add multiple domains like this:
+
+```yml
+firmalisten:
+  host: firmalisten.test www.firmalisten.test
+  port: 5843
+```
+
+Add multiple apps like this:
+
+```yml
+firmalisten:
+  host: firmalisten.test
+  port: 5843
+pay_eldoy_test:
+  host: pay.eldoy.test
+  port: 5988
+```
+
+### Commands
 
 Start your proxy quietly with:
 ```
