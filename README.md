@@ -31,6 +31,14 @@ firmalisten:
   port: 5843
 ```
 
+Wildcard domains work like this:
+
+```yml
+firmalisten:
+  host: *.firmalisten.test
+  port: 5843
+```
+
 Add multiple apps like this:
 
 ```yml
