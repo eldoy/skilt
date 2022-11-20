@@ -42,6 +42,13 @@ pay_eldoy_test:
   port: 5988
 ```
 
+### Port
+
+By default the skilt server runs on port 80. To change port start skilt using the `SKILT_PORT` env variable:
+```
+SKILT_PORT=8080 skilt start
+```
+
 ### Commands
 
 Start your proxy server with:
