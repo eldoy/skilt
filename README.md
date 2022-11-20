@@ -42,6 +42,47 @@ pay_eldoy_test:
   port: 5988
 ```
 
+### Local Setup
+
+Add an entry for your domain in the `/etc/hosts` file to route `firmalisten.test` to localhost:
+```
+127.0.0.1 firmalisten.test
+```
+
+### Wildcard domains
+
+Instead of using the `/etc/hosts` file, use `dnsmasq` to forward browser requests to localhost:
+
+```
+brew install dnsmasq
+```
+
+Add this to `$(brew --prefix)/etc/dnsmasq.conf`:
+
+```
+address=/firmalisten.test/127.0.0.1
+```
+
+Start dnsmasq as a service:
+
+```
+sudo brew services start dnsmasq
+```
+
+Add a file in `/etc/resolver/firmalisten.test`:
+
+```
+nameserver 127.0.0.1
+```
+
+Test that it's working with:
+
+```
+ping sub.firmalisten.test
+```
+
+Article about this setup is [found here.](https://yuchen52.medium.com/dns-configurations-for-dev-environment-d35dbd3eba5d)
+
 ### Port
 
 By default the skilt server runs on port 80. To change port start skilt using the `SKILT_PORT` env variable:
