@@ -3,8 +3,15 @@ const httpProxy = require('http-proxy')
 const extras = require('extras')
 const rekvest = require('rekvest')
 
-console.log('Reading config file...')
+function wildcardToRegExp (s) {
+  return new RegExp('^' + s.split(/\*+/).map(regExpEscape).join('.*') + '$')
+}
 
+function regExpEscape (s) {
+  return s.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
+}
+
+console.log('Reading config file...')
 const configPath = '~/.config/skilt/sites.yml'
 
 if (!extras.exist(configPath)) {
@@ -31,6 +38,8 @@ for (const name in sites) {
     host = host.split(' ')
   }
 
+  host = host.map(wildcardToRegExp)
+
   const proxy = new httpProxy.createProxyServer({
     target: {
       host: target,
@@ -45,7 +54,9 @@ for (const name in sites) {
 function getRoute(req) {
   rekvest(req)
 
-  const route = routes.find(r => r.host.includes(req.hostname))
+  const route = routes.find(r => {
+    return r.host.find(h => h.test(req.hostname))
+  })
   if (!route) {
     console.log(`Route for ${req.hostname} not found.`)
   }
