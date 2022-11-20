@@ -47,7 +47,7 @@ function getRoute(req) {
 
   const route = routes.find(r => r.host.includes(req.hostname))
   if (!route) {
-    console.log(`HTTP route for ${req.hostname} not found.`)
+    console.log(`Route for ${req.hostname} not found.`)
   }
   return route
 }
