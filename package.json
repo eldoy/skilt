@@ -16,8 +16,8 @@
   "author": "Vidar Eldøy <vidar@eldoy.com>",
   "license": "MIT",
   "dependencies": {
-    "extras": "^0.10.6",
+    "extras": "^0.12.1",
     "http-proxy": "^1.18.1",
-    "rekvest": "^0.1.4"
+    "rekvest": "^0.1.5"
   }
 }

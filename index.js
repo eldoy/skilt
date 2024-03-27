@@ -3,11 +3,11 @@ const httpProxy = require('http-proxy')
 const extras = require('extras')
 const rekvest = require('rekvest')
 
-function wildcardToRegExp (s) {
+function wildcardToRegExp(s) {
   return new RegExp('^' + s.split(/\*+/).map(regExpEscape).join('.*') + '$')
 }
 
-function regExpEscape (s) {
+function regExpEscape(s) {
   return s.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
 }
 
@@ -28,11 +28,7 @@ console.log(JSON.stringify(sites, null, 2))
 
 const routes = []
 for (const name in sites) {
-  let {
-    host = 'localhost',
-    target = 'localhost',
-    port = 5000
-  } = sites[name]
+  let { host = 'localhost', target = 'localhost', port = 5000 } = sites[name]
 
   if (typeof host == 'string') {
     host = host.split(' ')
@@ -46,16 +42,20 @@ for (const name in sites) {
       port
     }
   })
-  proxy.on('close', function(){})
-  proxy.on('error', function(){})
+  proxy.on('close', function () {})
+  proxy.on('error', function () {})
   routes.push({ host, proxy })
 }
 
 function getRoute(req) {
-  rekvest(req)
+  try {
+    rekvest(req)
+  } catch (e) {
+    return null
+  }
 
-  const route = routes.find(r => {
-    return r.host.find(h => h.test(req.hostname))
+  const route = routes.find((r) => {
+    return r.host.find((h) => h.test(req.hostname))
   })
   if (!route) {
     console.log(`Route for ${req.hostname} not found.`)
