@@ -15,7 +15,7 @@ npm i -g skilt
 
 ### Config
 
-Add config file in `~/.config/skilt/config.yml`:
+Add config file in `~/.config/skilt/sites.yml`:
 
 ```yml
 firmalisten:
