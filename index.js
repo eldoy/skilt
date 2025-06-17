@@ -1,4 +1,5 @@
 const http = require('http')
+const https = require('https')
 const httpProxy = require('http-proxy')
 const extras = require('extras')
 const rekvest = require('rekvest')
@@ -63,16 +64,51 @@ function getRoute(req) {
   return route
 }
 
-var proxyServer = http.createServer(function (req, res) {
-  const route = getRoute(req)
-  route && route.proxy.web(req, res)
-})
+const USE_HTTPS = process.env.SKILT_HTTPS === 'true'
+console.log('Configuration HTTPS:', USE_HTTPS ? 'ENABLED' : 'DISABLED')
+
+var proxyServer
+
+if(USE_HTTPS) {
+  const skiltDir = '~/.config/skilt'
+  const keyPath = `${skiltDir}/localhost.key`
+  const certPath = `${skiltDir}/localhost.cert`
+
+  if (!extras.exist(keyPath)) {
+    console.error(`\nSSL key file not found at: ${keyPath}`)
+    console.error(`\nPlease generate certificates on ${skiltDir} with:`)
+    console.error('\nopenssl req -x509 -newkey rsa:4096 -keyout localhost.key -out localhost.cert -days 365 -nodes -subj "/CN=localhost"\n')
+    process.exit(1)
+  }
+  
+  if (!extras.exist(certPath)) {
+    console.error(`\nSSL cert file not found at: ${certPath}`)
+    process.exit(1)
+  }
+
+  const options = {
+    key: extras.read(keyPath),
+    cert: extras.read(certPath),
+  }
+
+  proxyServer = https.createServer(options, function (req, res) {
+    const route = getRoute(req)
+    route && route.proxy.web(req, res)
+  })
+} else {
+  proxyServer = http.createServer(function (req, res) {
+    const route = getRoute(req)
+    route && route.proxy.web(req, res)
+  })
+}
 
 proxyServer.on('upgrade', function (req, socket, head) {
   const route = getRoute(req)
   route && route.proxy.ws(req, socket, head)
 })
 
-const PORT = process.env.SKILT_PORT || 80
+const DEFAULT_PORT = USE_HTTPS ? 443 : 80
+const PORT = process.env.SKILT_PORT || DEFAULT_PORT
+
 console.log('Proxy server listening on port', PORT)
 proxyServer.listen(PORT)
