@@ -98,6 +98,25 @@ By default the skilt server runs on port 80. To change port start skilt using th
 SKILT_PORT=8080 skilt start
 ```
 
+To be able to use the HTTPS server, the local certificates has to be created and stored on the config/skilt dir first.
+
+```
+cd ~/.config/skilt
+openssl req -x509 -newkey rsa:4096 -keyout localhost.key -out localhost.cert -days 365 -nodes -subj "/CN=localhost"
+```
+
+Once the localhost.key and the localhost.cert files are created, the HTTPS server can be started like this:
+
+```
+skilt start --https
+```
+
+or like this
+
+```
+skilt start -h
+```
+
 ### Commands
 
 Start your proxy server with:
