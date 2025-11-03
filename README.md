@@ -143,4 +143,13 @@ skilt stop
 
 Go to [http://firmalisten.test](http://firmalisten.test) and enjoy!
 
+### Troubleshooting
+
+On Linux you might need to allow NodeJS to bind to port 80:
+
+```sh
+sudo setcap 'cap_net_bind_service=+ep' $(which node)
+```
+
+
 MIT Licensed. Enjoy!
